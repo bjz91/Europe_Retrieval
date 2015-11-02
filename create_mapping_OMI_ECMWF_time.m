@@ -14,14 +14,12 @@ if ~exist(out_dirname,'dir')
     system(['mkdir -p ' out_dirname]);
 end;
 
-path_ECMWF='/public/temp/BJZ/ERA-Interim/China036Hourly/';
+path_ECMWF='/public/temp/BJZ/ERA-Interim/Europe036Hourly/';
 
 flag_result=zeros(size(time_acrosstrack_alongtrack,1),size(time_acrosstrack_alongtrack,2));
 U15_V15=cell(size(time_acrosstrack_alongtrack,1),size(time_acrosstrack_alongtrack,2));
 for tag=1:eomday(jahr,monat)
     %for tag=31:31
-    
-    tic
     
     tagstr=num2str(tag); if tag<10 tagstr=['0' tagstr]; end;
     disp([jahrstr monatstr tagstr]);
@@ -55,14 +53,6 @@ for tag=1:eomday(jahr,monat)
         netcdf.close(ncid);
     end;
     
-    %lack data for 01/01/2014
-    %{
-    if jahr== 2013 && monat==12 && tag==31
-        tom_jahrstr=num2str(jahr);
-        tom_monatstr='12';
-        tom_tagstr='31';
-    else
-    %}
     %load the 'tomorrow' data for interpolate
     if monat==12 && tag==31
         tom_jahrstr=num2str(jahr+1);
@@ -77,7 +67,6 @@ for tag=1:eomday(jahr,monat)
         tom_monatstr=num2str(monat); if monat<10 tom_monatstr=['0' tom_monatstr]; end;
         tom_tagstr=num2str(tag+1); if tag+1<10 tom_tagstr=['0' tom_tagstr]; end;
     end;
-    % end;
     path=[path_ECMWF tom_jahrstr '/' tom_monatstr '/' tom_tagstr '/netcdf_complete/'];
     tom_flist=dir([path '*_U_V_ml_00.nc']);
     fname=[path tom_flist(1).name];
@@ -130,8 +119,6 @@ for tag=1:eomday(jahr,monat)
             
         end;
     end;
-    
-    toc
     
 end;
 
