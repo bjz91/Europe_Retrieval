@@ -20,7 +20,7 @@ end
 
 
 %% BJZ
-%{
+
 %cell_time_acrosstrack_alongtrack=cell(end_jahr-start_jahr+1,end_month-start_month+1);
 %cell_U15_V15=cell(end_jahr-start_jahr+1,end_month-start_month+1);
 capacity=zeros(length(ROI(ROI_index).latvec),length(ROI(ROI_index).lonvec));
@@ -67,8 +67,6 @@ end
 disp('finish loading mapping and wind files');
 
 save('time_list.mat','time_list','capacity');
-%}
-load('time_list.mat');
 
 %% BJZ
 %{
