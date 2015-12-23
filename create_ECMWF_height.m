@@ -14,7 +14,7 @@ if ~exist(out_dirname,'dir')
     system(['mkdir -p ' out_dirname]);
 end;
 
-path_ECMWF='/public/temp/BJZ/ERA-Interim/Europe036Hourly/';
+path_ECMWF='/home/bijianzhao/bjz_tmp/Europe/Europe036Hourly/';
 
 flag_result=zeros(size(time_acrosstrack_alongtrack,1),size(time_acrosstrack_alongtrack,2));
 height=cell(size(time_acrosstrack_alongtrack,1),size(time_acrosstrack_alongtrack,2));
@@ -71,7 +71,7 @@ for tag=1:eomday(jahr,monat)
     end;
     % end;
     path=[path_ECMWF tom_jahrstr '/' tom_monatstr '/' tom_tagstr '/netcdf_complete/'];
-    tom_flist=dir([path '*_00.nc']);
+    tom_flist=dir([path '*_00_complete.nc']);
     fname=[path tom_flist(1).name];
     ncid = netcdf.open(fname,'NOWRITE');
     timeid=netcdf.inqVarID(ncid,'time_utc');
