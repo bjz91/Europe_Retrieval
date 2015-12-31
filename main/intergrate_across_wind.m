@@ -16,7 +16,7 @@ if ~exist(out_dirname,'dir')
 end;
 
 
-%raw is the info of hotspots       
+%raw is the info of hotspots
 for k=1:size(raw,1)-1
     name=cell2mat(raw(k+1,1))
     name(name==' ')='_';
@@ -36,7 +36,7 @@ for k=1:size(raw,1)-1
     add_season_5;%remove data with too few sample number
     fill_gaps;
     
-    clear LD;   
+    clear LD;
     clipping_intergrate_across_wind;
     
     %Skalierung lat/lon->y/x
@@ -44,7 +44,7 @@ for k=1:size(raw,1)-1
     dlon=dx./cos(point_latitude/180*pi);
     rotangle=atan2(dlat,dlon)/pi*180;
     windangle=atan2(dy,dx)/pi*180;
-
+    
     if OK==1
         for indx_season=seasons
             %for indx_winddir=[1:4 6:9]
