@@ -5,17 +5,16 @@ seasons=6
 intergrate_across_wind_para_path;
 path_regional_files2=[path_regional_files start_jahrstr '_' end_jahrstr];
 if ~exist(path_regional_files2,'dir')
-        system(['mkdir -p ' path_regional_files2]);
+    system(['mkdir -p ' path_regional_files2]);
     %mkdir(path_regional_files2);
 end;
 out_dirname_main=[path_regional_files2 '/Intergrate_column_height_resolution' num2str(resolution) '_' ROI(ROI_index).name '_altitude' num2str(wind_altitude) '_calmspeed' num2str(calm_speed) '_maxspeed' num2str(max_speed)];
 if ~exist(out_dirname_main,'dir')
-        system(['mkdir -p ' out_dirname_main]);
+    system(['mkdir -p ' out_dirname_main]);
     %mkdir(out_dirname_main);
 end;
 
 fitoptions=optimset('lsqnonlin');
-disp('here!')
 %for k=40
 for k=1:size(raw,1)-1
     
@@ -31,8 +30,8 @@ for k=1:size(raw,1)-1
     name(name=='+')='_';
     type=cell2mat(raw(k+1,13));
     
-    %     aa_LD=cell2mat(raw(k+1,6));
-    %     bb_LD=cell2mat(raw(k+1,7));
+    %aa_LD=cell2mat(raw(k+1,6));
+    %bb_LD=cell2mat(raw(k+1,7));
     
     option=cell2mat(raw(k+1,14));
     
@@ -49,10 +48,14 @@ for k=1:size(raw,1)-1
         %                 aa=100;
         %                 bb=100;
         %         end;
+        
         switch type
             case 'S'
+                %BJZ edit
                 aa=50;
                 bb=20;
+                %aa=250;
+                %bb=250;
             case 'M'
                 aa=100;
                 bb=20;
@@ -64,14 +67,16 @@ for k=1:size(raw,1)-1
             aa=150;
             bb=60;
         end;
+ 
         
-        %          aa=aa*1.5;
-        bb=bb*1.5;
+        %BJZ edit why 1.5?
+        % aa=aa*1.5;
+         bb=bb*1.5;
         
         clear Intergrate;
         out_dirname=[out_dirname_main '/' name];
         if ~exist(out_dirname,'dir')
-             system(['mkdir -p ' out_dirname]);
+            system(['mkdir -p ' out_dirname]);
             %mkdir(out_dirname);
         end;
         

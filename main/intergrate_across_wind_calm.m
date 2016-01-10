@@ -75,7 +75,7 @@ for k=1:size(raw,1)-1
                 %Check: Interferenz mit anderen Quellen in y-Richtung? einfacher Test ?er Momente!
                 integrationrange=jjj+brange;
                 fitrange=iii+arange;
-                
+               
                 %interferenz=abs(Moment1)>3;%In Pixeln! Kann man Moment2 noch sinnvol nutzen? %
                 Trot_=Trot(integrationrange,fitrange);
                 Trot_Orin_=Trot_Orin(integrationrange,fitrange);
