@@ -2,7 +2,7 @@
 ROI_index=3;
 
 start_jahr=2005;
-end_jahr=2014;
+end_jahr=2009;
 start_month=5;
 end_month=9;
 
