@@ -15,10 +15,10 @@ if ~exist(out_dirname,'dir')
 end;
 
 
-%raw is the info of hotspots       
+%raw is the info of hotspots
 for k=1:size(raw,1)-1
-%for k=[1:42 44:108 110:size(raw,1)-1]
-%for k=110:110
+    %for k=[1:42 44:108 110:size(raw,1)-1]
+    %for k=110:110
     name=cell2mat(raw(k+1,1))
     name(name==' ')='_';
     name(name=='+')='_';
@@ -30,23 +30,27 @@ for k=1:size(raw,1)-1
     %bb=bb+100;
     Samle_Num=cell2mat(raw(k+1,8));
     
-    %season=[winter, spring, summer, fall, all]
-    %wind_direction=[south-east,south,south-west,east,calm,west,north-east,north,north-west]
-    %The map_TVCD is the 4-dimensional matrix which contains wind-dependent seasonal mean NO2 maps.
-    %The dimensions are 1. latitude index; 2. longitude index; 3.season; 4.wind direction index
-    add_season_5;%remove data with too few sample number
-    fill_gaps;
+    option=cell2mat(raw(k+1,14));
     
-    clear LD_conv;   
-    clipping_intergrate_across_wind;
-    
-    %Skalierung lat/lon->y/x
-    dlat=dy;
-    dlon=dx./cos(point_latitude/180*pi);
-    rotangle=atan2(dlat,dlon)/pi*180;
-    windangle=atan2(dy,dx)/pi*180;
-
-
+    if option==1
+        
+        %season=[winter, spring, summer, fall, all]
+        %wind_direction=[south-east,south,south-west,east,calm,west,north-east,north,north-west]
+        %The map_TVCD is the 4-dimensional matrix which contains wind-dependent seasonal mean NO2 maps.
+        %The dimensions are 1. latitude index; 2. longitude index; 3.season; 4.wind direction index
+        add_season_5;%remove data with too few sample number
+        fill_gaps;
+        
+        clear LD_conv;
+        clipping_intergrate_across_wind;
+        
+        %Skalierung lat/lon->y/x
+        dlat=dy;
+        dlon=dx./cos(point_latitude/180*pi);
+        rotangle=atan2(dlat,dlon)/pi*180;
+        windangle=atan2(dy,dx)/pi*180;
+        
+        
         for indx_season=seasons
             for indx_winddir=1:9
                 T=squeeze(map_TVCD_filled_(:,:,indx_season,5));
@@ -75,7 +79,7 @@ for k=1:size(raw,1)-1
                 %Check: Interferenz mit anderen Quellen in y-Richtung? einfacher Test ?er Momente!
                 integrationrange=jjj+brange;
                 fitrange=iii+arange;
-               
+                
                 %interferenz=abs(Moment1)>3;%In Pixeln! Kann man Moment2 noch sinnvol nutzen? %
                 Trot_=Trot(integrationrange,fitrange);
                 Trot_Orin_=Trot_Orin(integrationrange,fitrange);
@@ -106,9 +110,11 @@ for k=1:size(raw,1)-1
                 LD_conv(indx_season,indx_winddir).U=mean_U;
                 LD_conv(indx_season,indx_winddir).V=mean_V;
                 LD_conv(indx_season,indx_winddir).XScale=double(XScale);
-                LD_conv(indx_season,indx_winddir).side_length_x=side_length_x;            
+                LD_conv(indx_season,indx_winddir).side_length_x=side_length_x;
             end;
         end;
         data_fname=[out_dirname '/LineDensities_' name '_aa' num2str(aa) '_bb' num2str(bb) '_calm.mat'];
         save(data_fname,'LD_conv');
+        
+    end
 end;
