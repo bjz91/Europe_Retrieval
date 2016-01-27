@@ -6,24 +6,37 @@ tau_final=cell(size(Point,2),2);
 
 for i=1:size(Point,2)
     
+    disp(Point{i});
+    
     load([str,Point{i},'/Fitresults_',Point{i},'_300_bb300_new.mat']);
     
-    tau=Results.tau(6,:);
-    ci=Results.pre_ci(6,:);
-    if size(ci,2)~=size(tau,2)
-        for i=size(ci,2)+1:size(tau,2)
-            ci(1,i)=0;
-        end
-    end
+    
+    tau_all=Results.tau;
+    ci_tmp=Results.pre_ci;
+    
+    %²¹È«ci¸ñÍø
+    ci_all=tau_all;
+    ci_all(1:size(ci_tmp,1),1:size(ci_tmp,2))=ci_tmp;
+    
+    tau=tau_all(6,:);
+    ci=ci_all(6,:);
+    
+    %¼ÆËãtau
+    tau(tau==0)=nan;
     ci(ci==0)=nan;
     inv_ci=1./ci;
     weight_sum=nansum(inv_ci);
     weight=inv_ci/weight_sum;
     tau_final{i,1}=Point{i};
     tau_final{i,2}=nansum(tau.*weight);
+    if tau_final{i,2}==0
+        tau_final{i,2}=nan;
+    end
+    
+    disp(tau_final{i,2});
     
     clear Results
     
 end
 
-save([str,'tau.mat'],'tau_final');
+save(['/home/bijianzhao/git/Europe/res/','tau.mat'],'tau_final');

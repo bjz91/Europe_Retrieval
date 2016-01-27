@@ -1,6 +1,6 @@
 #!/bin/sh
-#PBS -N main1
-#PBS -l nodes=1:ppn=12
+#PBS -N main2_2013
+#PBS -l nodes=1:ppn=16
 #PBS -j oe
 #PBS -o /home/bijianzhao/log
 #PBS -m bae
@@ -8,4 +8,4 @@
 
 
 cd /home/bijianzhao/git/Europe 
-/gl/tools/run/Matlab/R2013b/bin/matlab  -nodesktop -nosplash -r main1
+/gl/tools/run/Matlab/R2013b/bin/matlab  -nodesktop -nosplash -r main2

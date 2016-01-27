@@ -15,7 +15,7 @@ if ~exist(out_dirname,'dir')
 end;
 
 %path_ECMWF='Z:\DATASETS\ECMWF_DATA\WindData_Asia\';
-path_ECMWF='/public/temp/BJZ/ERA-Interim/Europe036Hourly/';
+path_ECMWF='/home/bijianzhao/bjz_tmp/Europe/Europe036Hourly/';
 
 flag_result=zeros(size(time_acrosstrack_alongtrack,1),size(time_acrosstrack_alongtrack,2));
 U15_V15=cell(size(time_acrosstrack_alongtrack,1),size(time_acrosstrack_alongtrack,2));
@@ -75,7 +75,7 @@ for tag=1:eomday(jahr,monat)
     end;
     end;
     path=[path_ECMWF tom_jahrstr '/' tom_monatstr '/' tom_tagstr '/netcdf_complete/'];
-    tom_flist=dir([path '*_U_V_ml_00.nc']);
+    tom_flist=dir([path '*_00_complete.nc']);
     fname=[path tom_flist(1).name];
     ncid = netcdf.open(fname,'NOWRITE');
     timeid=netcdf.inqVarID(ncid,'time_utc');
