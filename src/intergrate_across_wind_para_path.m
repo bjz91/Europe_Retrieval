@@ -3,8 +3,8 @@ ROI_index=3;
 
 start_jahr=2005;
 end_jahr=2014;
-start_month=5;
-end_month=9;
+start_month=1;
+end_month=12;
 
 wind_altitude=500;
 calm_speed=2;
@@ -21,9 +21,9 @@ winddirlabel=['SE'; 'S '; 'SW'; 'E '; '0 '; 'W '; 'NE'; 'N '; 'NW'];
 
 path_input_files='input/';
 load([path_input_files 'grid_definitions.mat']);
-load([path_input_files 'ROI_definitions_old.mat']);
+load([path_input_files 'ROI_definitions.mat']);
 
-path_regional_files='output_old/';
+path_regional_files='output/';
 DATA_dirname=[path_regional_files 'Region_OMI_ECMWF_average_fine_resolution_' ROI(ROI_index).name];
 load([DATA_dirname '/' 'Average_resolution' num2str(resolution) '_' ROI(ROI_index).name '_'  start_jahrstr start_monatstr '_' end_jahrstr end_monatstr ...
     '_altitude' num2str(wind_altitude) '_calmspeed' num2str(calm_speed) '_maxspeed' num2str(max_speed) '.mat']);
@@ -31,7 +31,7 @@ load([DATA_dirname '/' 'Average_resolution' num2str(resolution) '_' ROI(ROI_inde
 if ROI_index==2
     address=[path_input_files 'Location_USA.xls'];
 elseif ROI_index==3
-    address=[path_input_files 'Location_Europe.xls'];
+    address=[path_input_files 'Location_Europe_old.xls'];
 else
     address=[path_input_files 'Location_China.xls'];
 end;

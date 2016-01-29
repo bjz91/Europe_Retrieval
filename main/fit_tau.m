@@ -1,5 +1,5 @@
 clear all
-seasons=[1:7]
+seasons=1:7
 %seasons=6
 
 intergrate_across_wind_para_path;
@@ -25,8 +25,7 @@ opt.TolX=1e-10;
 opt.DerivStep=1e-10;
 
 for k=1:size(raw,1)-1
-    %for k=[1:66 68:108 110]%USA
-    %for k=22
+    
     name=cell2mat(raw(k+1,1))
     name(name==' ')='_';
     name(name=='+')='_';

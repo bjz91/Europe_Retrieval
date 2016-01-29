@@ -3,8 +3,10 @@ clc
 
 tic
 
-parfor year=2005:2014
-    for month=5:9
+addpath('main');
+
+parfor month=1:12
+    for year=2005:2014
         create_ECMWF_height(3,year,month);
     end
 end

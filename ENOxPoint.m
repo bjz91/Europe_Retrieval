@@ -1,5 +1,5 @@
-str='/home/bijianzhao/git/Europe/output_old/2005_2014/Intergrate_column_height_resolution4_Europe_altitude500_calmspeed2_maxspeed1000/';
-load('/home/bijianzhao/git/Europe/input/Point.mat');
+str='/home/bijianzhao/git/Europe/output/2005_2014/Intergrate_column_height_resolution4_Europe_altitude500_calmspeed2_maxspeed1000/';
+load('/home/bijianzhao/git/Europe/res/Point.mat');
 load('/home/bijianzhao/git/Europe/res/tau.mat');
 
 ENOx_final=cell(size(Point,2),2);
@@ -11,7 +11,7 @@ for i=1:size(Point,2)
        load([str,Point{i},'/Intergrate_calm_',Point{i},'_200_bb40_linear_multiple.mat']);
         
         tau=tau_final{i,2};
-        A=Intergrate.A(6);
+        A=Intergrate.A(6); %Ozone season
         A=A*1e28;
         mol=A/(6.022*1e23);
         ENO2=mol/(tau*3600);
