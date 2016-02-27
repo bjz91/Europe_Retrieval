@@ -31,7 +31,7 @@ load([DATA_dirname '/' 'Average_resolution' num2str(resolution) '_' ROI(ROI_inde
 if ROI_index==2
     address=[path_input_files 'Location_USA.xls'];
 elseif ROI_index==3
-    address=[path_input_files 'Location_Europe_old.xls'];
+    address=[path_input_files 'Location_Europe.xls'];
 else
     address=[path_input_files 'Location_China.xls'];
 end;

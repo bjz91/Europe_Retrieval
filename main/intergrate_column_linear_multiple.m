@@ -52,8 +52,8 @@ for k=1:size(raw,1)-1
         switch type
             case 'S'
                 %BJZ edit
-                aa=200;
-                bb=40;
+                aa=100; %h=200km
+                bb=20;  %v=40km
                 %aa=250;
                 %bb=250;
             case 'M'
