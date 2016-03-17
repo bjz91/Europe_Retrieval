@@ -1,6 +1,6 @@
 clear all
-seasons=1:7
-%seasons=6
+%seasons=1:7
+seasons=6
 
 intergrate_across_wind_para_path;
 path_regional_files2=[path_regional_files start_jahrstr '_' end_jahrstr];

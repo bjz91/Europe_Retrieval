@@ -1,40 +1,40 @@
 
-str='/home/bijianzhao/git/Europe/output/2005_2014/Fit_tau_height_resolution4_Europe_altitude500_calmspeed2_maxspeed1000_calm_conv/';
-load('/home/bijianzhao/git/Europe/res/Point.mat');
+str='output/2005_2014/Fit_tau_height_resolution4_Europe_altitude500_calmspeed2_maxspeed1000_calm_conv/';
+load('input/Points.mat');
 
-tau_final=cell(size(Point,2),2);
+tau_final=cell(size(Points,2),2);
 
-for i=1:size(Point,2)
+season=6; %Ozone season
+
+for i=1:size(Points,2)
     
-    disp(Point{i});
+    disp(Points{i});
     
     %% 读取数据
-    load([str,Point{i},'/Fitresults_',Point{i},'_300_bb300_new.mat']);
+    load([str,Points{i},'/Fitresults_',Points{i},'_300_bb300_new.mat']);
     
-    %tau_all=Results.tau;
-    tau_all=Results.tau_lsqnonlin; %!!!!!!!!!用lsqnonlin的结果看起来更好
+    tau_all=Results.tau;
+    %tau_all=Results.tau_lsqnonlin; %!!!!!!!!!用lsqnonlin的结果看起来更好
     tau_all(tau_all==0)=NaN;
     if sum(~isnan(tau_all))==0
-        tau_final{i,1}=Point{i};
+        tau_final{i,1}=Points{i};
         tau_final{i,2}=nan;
         disp(tau_final{i,2});
         disp('Nonexist!');
         continue;
     end
-    ci_tmp=Results.pre_ci;
+    ci_all=Results.tau_max-Results.tau_min;
     R_all=Results.R;
+    chi2_all=Results.chi2_fit1;
     
     %% 预处理
     
-    % 补全ci格网
-    ci_all=tau_all;
-    ci_all(1:size(ci_tmp,1),1:size(ci_tmp,2))=ci_tmp;
-    
     % Ozone season
-    tau=tau_all(6,:);
-    ci=ci_all(6,:);
-    R=R_all(6,:);
-    tau_low=tau-ci;
+    tau=tau_all(season,:);
+    ci=ci_all(season,:);
+    R=R_all(season,:);
+    tau_low=Results.tau_min(season,:);
+    chi2=chi2_all(season,:);
     
     
     %% 数据过滤
@@ -45,16 +45,27 @@ for i=1:size(Point,2)
     tau(tau_low<0)=NaN;
     %CI宽度<10h
     tau(ci>10)=NaN;
-    %CI重计算
+    %CI和chi2重计算
     ci(isnan(tau))=NaN;
+    chi2(isnan(tau))=NaN;
     
     
     %% 计算tau
     
+    %Inverse weight of ci
     inv_ci=1./ci;
-    weight_sum=nansum(inv_ci);
-    weight=inv_ci/weight_sum;
-    tau_final{i,1}=Point{i};
+    weight_sum_ci=nansum(inv_ci);
+    weight_ci=inv_ci/weight_sum_ci;
+    %Inverse weight of chi2 
+    inv_chi2=1./chi2;
+    weight_sum_chi2=nansum(inv_chi2);
+    weight_chi2=inv_chi2/weight_sum_chi2;
+    %Final weight
+    weight=weight_ci+weight_chi2;
+    weight=weight/nansum(weight);
+    
+    %Calculate the weighted tau
+    tau_final{i,1}=Points{i};
     tau_final{i,2}=nansum(tau.*weight);
     if tau_final{i,2}==0
         tau_final{i,2}=nan;
@@ -66,4 +77,4 @@ for i=1:size(Point,2)
     
 end
 
-save(['/home/bijianzhao/git/Europe/res/','tau.mat'],'tau_final');
+save(['res/','tau.mat'],'tau_final');

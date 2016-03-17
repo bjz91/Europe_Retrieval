@@ -1,10 +1,10 @@
 
 ROI_index=3;
 
-start_jahr=2005;
-end_jahr=2014;
-start_month=1;
-end_month=12;
+start_jahr=2013;
+end_jahr=2015;
+start_month=5;
+end_month=9;
 
 wind_altitude=500;
 calm_speed=2;

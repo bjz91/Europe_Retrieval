@@ -5,7 +5,7 @@ load([path_input_files 'grid_definitions.mat']);
 load([path_input_files 'ROI_definitions.mat']);
 
 path_regional_files='output/';
-path_OMI='/public/satellite/OMI/no2/DOMINO_S_v2/';
+path_OMI='/home/bijianzhao/data/OMI/NO2/DOMINO_L2Swath_v2/';
 
 start_jahrstr=num2str(start_jahr);
 end_jahrstr=num2str(end_jahr);
@@ -76,18 +76,20 @@ for k=1:size(time_list,1)
     if not(strcmp(fname,'/public/satellite/OMI/no2/DOMINO_S_v2/2013/10/OMI-Aura_L2-OMDOMINO_2013m1002t1854-o49025_v003-2013m1006t001124.he5'))
         if not(strcmp(fname,'/public/satellite/OMI/no2/DOMINO_S_v2/2013/10/OMI-Aura_L2-OMDOMINO_2013m1009t0548-o49119_v003-2013m1013t000457.he5'))
             if not(strcmp(fname,'/public/satellite/OMI/no2/DOMINO_S_v2/2013/12/OMI-Aura_L2-OMDOMINO_2013m1201t1555-o49897_v003-2013m1205t001125.he5'))
-                %TAMF_list{k}=double(hdf5read(fname,'/HDFEOS/SWATHS/DominoNO2/Data Fields/AirMassFactorTropospheric'));
-                CF_list{k}=double(hdf5read(fname,'/HDFEOS/SWATHS/DominoNO2/Data Fields/CloudFraction'));
-                CP_list{k}=double(hdf5read(fname,'/HDFEOS/SWATHS/DominoNO2/Data Fields/CloudPressure'));
-                CRF_list{k}=double(hdf5read(fname,'/HDFEOS/SWATHS/DominoNO2/Data Fields/CloudRadianceFraction'));
-                TVCD_list{k}=double(hdf5read(fname,'/HDFEOS/SWATHS/DominoNO2/Data Fields/TroposphericVerticalColumn'));
-                SZA_list{k}=double(hdf5read(fname,'/HDFEOS/SWATHS/DominoNO2/Geolocation Fields/SolarZenithAngle'));
-                %XQF_list{k}=double(hdf5read(fname,'/HDFEOS/SWATHS/DominoNO2/Data Fields/FitQualityFlags'));%XTrackQualityFlags
-                lat_satellite_list{k}=double(hdf5read(fname,'/HDFEOS/SWATHS/DominoNO2/Geolocation Fields/Latitude'));
-                lon_satellite_list{k}=double(hdf5read(fname,'/HDFEOS/SWATHS/DominoNO2/Geolocation Fields/Longitude'));
-                lat_corner_list{k}=double(hdf5read(fname,'/HDFEOS/SWATHS/DominoNO2/Geolocation Fields/LatitudeCornerpoints'));
-                lon_corner_list{k}=double(hdf5read(fname,'/HDFEOS/SWATHS/DominoNO2/Geolocation Fields/LongitudeCornerpoints'));
-            end;
+                if not(strcmp(fname,'/public/satellite/OMI/no2/DOMINO_S_v2/2007/09/OMI-Aura_L2-OMDOMINO_2007m0901t0002-o16641_v003-2010m1118t092107.he5'))
+                    %TAMF_list{k}=double(hdf5read(fname,'/HDFEOS/SWATHS/DominoNO2/Data Fields/AirMassFactorTropospheric'));
+                    CF_list{k}=double(hdf5read(fname,'/HDFEOS/SWATHS/DominoNO2/Data Fields/CloudFraction'));
+                    CP_list{k}=double(hdf5read(fname,'/HDFEOS/SWATHS/DominoNO2/Data Fields/CloudPressure'));
+                    CRF_list{k}=double(hdf5read(fname,'/HDFEOS/SWATHS/DominoNO2/Data Fields/CloudRadianceFraction'));
+                    TVCD_list{k}=double(hdf5read(fname,'/HDFEOS/SWATHS/DominoNO2/Data Fields/TroposphericVerticalColumn'));
+                    SZA_list{k}=double(hdf5read(fname,'/HDFEOS/SWATHS/DominoNO2/Geolocation Fields/SolarZenithAngle'));
+                    %XQF_list{k}=double(hdf5read(fname,'/HDFEOS/SWATHS/DominoNO2/Data Fields/FitQualityFlags'));%XTrackQualityFlags
+                    lat_satellite_list{k}=double(hdf5read(fname,'/HDFEOS/SWATHS/DominoNO2/Geolocation Fields/Latitude'));
+                    lon_satellite_list{k}=double(hdf5read(fname,'/HDFEOS/SWATHS/DominoNO2/Geolocation Fields/Longitude'));
+                    lat_corner_list{k}=double(hdf5read(fname,'/HDFEOS/SWATHS/DominoNO2/Geolocation Fields/LatitudeCornerpoints'));
+                    lon_corner_list{k}=double(hdf5read(fname,'/HDFEOS/SWATHS/DominoNO2/Geolocation Fields/LongitudeCornerpoints'));
+                end;
+            end
         end
     end;
 end;

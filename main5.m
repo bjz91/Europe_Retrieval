@@ -3,6 +3,8 @@ clc
 
 tic
 
+parpool(12);
+
 addpath('main');
 
 parfor month=1:12

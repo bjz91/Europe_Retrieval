@@ -1,6 +1,6 @@
 clear all
-seasons=1:7
-%seasons=6
+%seasons=1:7
+seasons=6
 
 intergrate_across_wind_para_path;
 path_regional_files2=[path_regional_files start_jahrstr '_' end_jahrstr];
@@ -52,10 +52,8 @@ for k=1:size(raw,1)-1
         switch type
             case 'S'
                 %BJZ edit
-                aa=100; %h=200km
+                aa=50; %h=100km
                 bb=20;  %v=40km
-                %aa=250;
-                %bb=250;
             case 'M'
                 aa=100;
                 bb=20;
