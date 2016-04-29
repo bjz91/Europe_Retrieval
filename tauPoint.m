@@ -3,7 +3,7 @@ str='output/2005_2014/Fit_tau_height_resolution4_Europe_altitude500_calmspeed2_m
 strLD='output/2005_2014/LD_height_resolution4_Europe_altitude500_calmspeed2_maxspeed1000/';
 load('input/Points.mat');
 
-tau_final=cell(size(Points,2),3);
+tau_final=cell(size(Points,2),6);
 
 season=6; %Ozone season
 
@@ -24,6 +24,9 @@ for i=1:size(Points,2)
         tau_final{i,1}=Points{i};
         tau_final{i,2}=nan;
         tau_final{i,3}=nan;
+        tau_final{i,4}=nan;
+        tau_final{i,5}=nan;
+        tau_final{i,6}=nan;
         disp('Nonexist!');
         continue;
     end
@@ -39,6 +42,7 @@ for i=1:size(Points,2)
     ci_all=Results.tau_max-Results.tau_min;
     R_all=Results.R;
     chi2_all=Results.chi2_fit1;
+    N_all=Results.N;
     
     %% 预处理
     
@@ -49,6 +53,7 @@ for i=1:size(Points,2)
     tau_low=Results.tau_min(season,:);
     chi2=chi2_all(season,:);
     windspeed=windspeed_all(season,:);
+    N=N_all(season,:);
     
     
     %% 数据过滤
@@ -63,6 +68,8 @@ for i=1:size(Points,2)
     ci(isnan(tau))=NaN;
     chi2(isnan(tau))=NaN;
     windspeed(isnan(tau))=NaN;
+    N(isnan(tau))=NaN;
+    R(isnan(tau))=NaN;
     
     
     %% 计算tau
@@ -83,15 +90,30 @@ for i=1:size(Points,2)
     tau_final{i,1}=Points{i};
     tau_final{i,2}=nansum(tau.*weight);
     tau_final{i,3}=nansum(windspeed.*weight);
+    tau_final{i,4}=nansum(ci.*weight);
+    tau_final{i,5}=nansum(N.*weight);
+    tau_final{i,6}=nansum(R.*weight);
     if tau_final{i,2}==0
         tau_final{i,2}=nan;
     end
     if tau_final{i,3}==0
         tau_final{i,3}=nan;
     end
+    if tau_final{i,4}==0
+        tau_final{i,4}=nan;
+    end
+    if tau_final{i,5}==0
+        tau_final{i,5}=nan;
+    end
+    if tau_final{i,6}==0
+        tau_final{i,6}=nan;
+    end
     
     disp(['Tau = ',num2str(tau_final{i,2})]);
     disp(['Wind Speed = ',num2str(tau_final{i,3})]);
+    disp(['CI = ',num2str(tau_final{i,4})]);
+    disp(['N = ',num2str(tau_final{i,5})]);
+    disp(['R = ',num2str(tau_final{i,6})]);
     
     clear Results
     
